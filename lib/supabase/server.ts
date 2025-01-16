@@ -1,34 +1,50 @@
 "use server";
 
-import { CookieOptions, createServerClient as _createServerClient } from '@supabase/ssr'
+import { createServerClient as _createServerClient, type CookieOptions } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 
 export const createServerClient = async (
   supabaseUrl: string,
   supabaseKey: string,
-  options: { cookies: any }
+  options: { 
+    cookies: {
+      get(name: string): string | undefined
+      set(name: string, value: string, options: CookieOptions): void
+      remove(name: string, options: CookieOptions): void
+    }
+  }
 ) => {
-  return _createServerClient(supabaseUrl, supabaseKey, options)
+  return _createServerClient(
+    supabaseUrl,
+    supabaseKey,
+    {
+      cookies: options.cookies,
+      cookieOptions: {
+        path: '/',
+        sameSite: 'lax',
+        secure: process.env.NODE_ENV === 'production'
+      }
+    }
+  )
 }
 
 export const supabaseServer = async () => {
-  const cookieStore = await cookies();
-
-  return _createServerClient(
+  const cookieStore = await cookies()
+  return createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
-        get(name:string) {
-          return cookieStore.get(name)?.value;
+        get(name: string) {
+          return cookieStore.get(name)?.value
         },
-        set(name: string, value: string, options: CookieOptions) {
+        set(name: string, value: string, options: any) {
           cookieStore.set(name, value, options)
         },
-        remove(name: string, options: CookieOptions) {
+        remove(name: string, options: any) {
           cookieStore.set(name, '', { ...options, maxAge: -1 })
         }
-      },
+      }
     }
   )
 }
