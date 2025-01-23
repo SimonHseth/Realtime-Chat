@@ -1,3 +1,5 @@
+"use client"
+
 import { Message } from "@/types";
 import { useEffect, useState } from "react";
 import { fetchMessages } from "./FetchMessage";
