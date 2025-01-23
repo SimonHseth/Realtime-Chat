@@ -1,0 +1,72 @@
+import { Message } from "@/types";
+import { useEffect, useState } from "react";
+import { fetchMessages } from "./FetchMessage";
+import { subscribeToMessages } from "./subscribe";
+import { sendMessage } from "./SendMessage";
+import { IoArrowForwardCircleOutline } from "react-icons/io5";
+
+
+export default function Chat() {
+    const [messages, setMessages] = useState<Message[]>([]);
+    const [newMessage, setNewMessages] = useState<string>("");
+    const [userId] = useState<string>(() => `user_${Math.random().toString(36).substring(7)}`)
+    const handleSendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!newMessage.trim()) return;
+
+    await sendMessage(newMessage, userId);
+    setNewMessages("");
+  };
+
+    
+
+
+    useEffect(() => {
+        const loadMessages = async () => {
+            const data = await fetchMessages();
+            setMessages(data);
+        };
+
+      
+
+        loadMessages();
+
+        const subscription = subscribeToMessages((newMsg: Message) => {
+            setMessages((prevMessages) => [...prevMessages, newMsg])
+        });
+
+        return () => {
+            subscription.unsubscribe();
+        };
+
+        
+    },[]);
+
+   
+
+    return (
+        <div className="p-[20px] max-w-[600px] m-0-auto">
+            <div className="max-h-[400px] overflow-y-auto border border-1 border-solid p-[10px]">
+                {messages.map((msg) => (
+                    <div key={msg.id} className="mt-[10px]">
+                        <strong>{msg.user_id}:</strong> {msg.content}
+                    </div>
+                ))}
+
+            </div>
+
+            
+            <form onSubmit={handleSendMessage} className="mt-[10px]">
+                <input
+                type="text"
+                value={newMessage}
+                onChange={(e) => setNewMessages(e.target.value)}
+                placeholder="Skriver her..."
+                className="w-80% p-[10]"
+                />
+                <button type="submit" className="p-[10px] ml-[10px]"><IoArrowForwardCircleOutline /></button>
+
+            </form>/
+        </div>
+    )
+}
