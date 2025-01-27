@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { fetchMessages } from "./FetchMessage";
 import { subscribeToMessages } from "./subscribe";
 import { sendMessage } from "./SendMessage";
-import { IoArrowForwardCircleOutline } from "react-icons/io5";
+
 
 
 export default function Chat() {
@@ -73,19 +73,6 @@ export default function Chat() {
                 ))}
 
             </div>
-
-            
-            <form onSubmit={handleSendMessage} className="mt-[10px] text-black">
-                <input
-                type="text"
-                value={newMessage}
-                onChange={(e) => setNewMessages(e.target.value)}
-                placeholder="Skriver her..."
-                className="w-80% p-[10]"
-                />
-                <button type="submit" className="p-[10px] ml-[10px]"><IoArrowForwardCircleOutline /></button>
-
-            </form>/
         </div>
     )
 }
