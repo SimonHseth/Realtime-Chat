@@ -24,21 +24,38 @@ export default function Chat() {
 
 
     useEffect(() => {
+        let isMounted = true;
+
         const loadMessages = async () => {
             const data = await fetchMessages();
-            setMessages(data);
+            if (isMounted) {
+                setMessages(data);
+            }
         };
 
       
 
         loadMessages();
 
-        const subscription = subscribeToMessages((newMsg: Message) => {
-            setMessages((prevMessages) => [...prevMessages, newMsg])
-        });
+        const subscribe = async () => {
+            const subscription = await subscribeToMessages((newMsg: Message) => {
+                if (isMounted) {
+                    setMessages((prevMessages) => [...prevMessages, newMsg]);
+                }
+            });
+
+            return () => {
+                if (subscription && typeof subscription.unsubscribe === 'function') {
+                    subscription.unsubscribe();
+                }
+            };
+        };
+
+        const cleanup = subscribe();
 
         return () => {
-            subscription.unsubscribe();
+            isMounted = false;
+            cleanup.then((fn) => fn());
         };
 
         
@@ -58,7 +75,7 @@ export default function Chat() {
             </div>
 
             
-            <form onSubmit={handleSendMessage} className="mt-[10px]">
+            <form onSubmit={handleSendMessage} className="mt-[10px] text-black">
                 <input
                 type="text"
                 value={newMessage}
