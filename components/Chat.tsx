@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { fetchMessages } from "./FetchMessage";
 import { subscribeToMessages } from "./subscribe";
 import { sendMessage } from "./SendMessage";
+import ChatInput from "./InputField";
 
 
 
@@ -65,13 +66,17 @@ export default function Chat() {
 
     return (
         <div className="p-[20px] max-w-[600px] m-0-auto">
-            <div className="max-h-[400px] overflow-y-auto border border-1 border-solid p-[10px]">
+            <div className="h-[500px] w-[720px] overflow-y-auto border border-1 border-dotted p-[10px]">
                 {messages.map((msg) => (
-                    <div key={msg.id} className="mt-[10px]">
+                    <div key={msg.id} className="mt-[10px] w-80 h-80">
                         <strong>{msg.user_id}:</strong> {msg.content}
                     </div>
                 ))}
 
+            </div>
+            <div className="w-full h-20 bottom-full flex">
+                <ChatInput/>
+                
             </div>
         </div>
     )

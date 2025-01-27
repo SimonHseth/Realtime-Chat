@@ -1,11 +1,12 @@
 import { FormEvent, useState } from "react";
-import { IoArrowForwardCircleOutline } from "react-icons/io5";
+import { sendMessage } from "./SendMessage";
+
 
 
 export const ChatInput = () => {
      const [newMessage ] = useState<string>("");
     function handleSendMessage(event: FormEvent<HTMLFormElement>): void {
-        throw new Error("Function not implemented.");
+        sendMessage;
     }
 
     function setNewMessages(value: string): void {
@@ -14,17 +15,17 @@ export const ChatInput = () => {
 
     return (
         <div className="w-full h-full flex items-center justify overflow-hidden">
-             <form onSubmit={handleSendMessage} className="mt-[10px] text-black">
+             <form onSubmit={handleSendMessage} className="mt-[10px] text-black bg-primary border border-solid rounded-md mr-0">
                 <input
                 type="text"
                 value={newMessage}
                 onChange={(e) => setNewMessages(e.target.value)}
-                placeholder="Skrive her..."
-                className="w-80% p-[10]"
+                placeholder="Skrive her..." 
+                className="w-[400px] h-12 p-[10] text-black bg-primary "
                 />
-                <button type="submit" className="p-[10px] ml-[10px]"><IoArrowForwardCircleOutline /></button>
+                <button type="submit" className="p-[10px] ml-5 mt-0 border text-white bg-green-700 h-full w-15 m-auto">Send</button>
 
-            </form>/
+            </form>
         
         </div>
     )
