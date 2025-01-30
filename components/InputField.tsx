@@ -4,13 +4,15 @@ import { sendMessage } from "./SendMessage";
 
 
 export const ChatInput = () => {
-     const [newMessage ] = useState<string>("");
-    function handleSendMessage(event: FormEvent<HTMLFormElement>): void {
-        sendMessage;
-    }
-
-    function setNewMessages(value: string): void {
-        throw new Error("Function not implemented.");
+     const [newMessage, setNewMessage ] = useState<string>("");
+    const [ userId ] = ("")
+     const handleSendMessage = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
+        event.preventDefault(); 
+        if (newMessage.trim() === "") {
+            return; 
+        }
+        await sendMessage(newMessage, userId); 
+        setNewMessage(""); 
     }
 
     return (
@@ -19,9 +21,9 @@ export const ChatInput = () => {
                 <input
                 type="text"
                 value={newMessage}
-                onChange={(e) => setNewMessages(e.target.value)}
+                onChange={(e) => setNewMessage(e.target.value)}
                 placeholder="Skrive her..." 
-                className="w-[400px] h-12 p-[10] text-black bg-primary "
+                className="w-[400px] h-12 p-[10] text-white bg-primary "
                 />
                 <button type="submit" className="p-[10px] ml-5 mt-0 border text-white bg-green-700 h-full w-15 m-auto">Send</button>
 
@@ -29,6 +31,6 @@ export const ChatInput = () => {
         
         </div>
     )
-}
+};
 
 export default ChatInput;

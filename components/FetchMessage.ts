@@ -5,7 +5,7 @@ import { Message } from "../types";
 
 export const fetchMessages = async (): Promise<Message[]> => {
     const supabase = await supabaseServer()
-    const { data, error} = await supabase
+    const { data, error } = await supabase
         .from("messages")
         .select("*")
         .order("created_at", { ascending: true });

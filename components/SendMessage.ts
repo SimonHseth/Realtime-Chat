@@ -10,5 +10,7 @@ export const sendMessage = async (content: string, userId: string): Promise<void
 
     if (error) {
         console.error("Error sending message", error);
+        console.log(sendMessage)
     }
 };
+
