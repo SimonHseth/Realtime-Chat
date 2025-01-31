@@ -4,7 +4,6 @@ import { Message } from "@/types";
 import { useEffect, useState } from "react";
 import { fetchMessages } from "./FetchMessage";
 import { subscribeToMessages } from "./subscribe";
-import { sendMessage } from "./SendMessage";
 import ChatInput from "./InputField";
 
 
@@ -17,7 +16,7 @@ export default function Chat() {
     e.preventDefault();
     if (!newMessage.trim()) return;
 
-    await sendMessage(newMessage, userId);
+    await (userId);
     setNewMessages("");
   };
 
