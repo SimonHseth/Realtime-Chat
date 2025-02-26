@@ -1,7 +1,7 @@
 "use server"
 
 import { supabaseServer } from "@/lib/supabase/server"
-import { Message } from "../types";
+import { Message } from "types";
 
 export const fetchMessages = async (): Promise<Message[]> => {
     const supabase = await supabaseServer()

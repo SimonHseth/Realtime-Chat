@@ -3,4 +3,5 @@ export interface Message {
     content: string;
     user_id: string;
     created_at: string;
+    timestamp: string;
 }

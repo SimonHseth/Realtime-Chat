@@ -1,6 +1,6 @@
-import Chat from "@/components/Chat";
-import ChatHeader from "@/components/ChatHeader";
-import InputField from "@/components/InputField"
+import Chat from "@/app/comp/Chat";
+import ChatHeader from "@/app/comp/ChatHeader";
+import InputField from "@/app/comp/InputField";
 
 export default async function Home() {
   return (

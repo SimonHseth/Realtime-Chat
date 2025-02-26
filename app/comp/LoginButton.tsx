@@ -1,7 +1,7 @@
 'use client'
 
 
-import { Button } from "./ui/button"
+import { Button } from "../button"
 import { createClient } from '@/lib/supabase/browser'
 
 export default function LoginButton() {
